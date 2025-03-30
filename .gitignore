@@ -1,0 +1,5 @@
+node_modules
+.swc
+.next
+.env
+tasks.md
