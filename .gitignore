@@ -1,3 +1,5 @@
+node_modules
+.swc
+.next
 .env
 tasks.md
-node_modules
