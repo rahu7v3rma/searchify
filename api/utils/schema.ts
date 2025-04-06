@@ -3,13 +3,19 @@ import { z } from "zod";
 
 export const SignUpSchema = z
   .object({
-    name: z.string().min(1),
-    email: z.string().email(),
-    password: z.string().refine(isStrongPassword, {
-      message:
-        "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one special character",
+    name: z.string({ message: "Name is required" }).min(1, {
+      message: "Name is required",
     }),
-    confirmPassword: z.string(),
+    email: z.string({ message: "Email is required" }).email({
+      message: "Invalid email",
+    }),
+    password: z
+      .string({ message: "Password is required" })
+      .refine(isStrongPassword, {
+        message:
+          "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one special character",
+      }),
+    confirmPassword: z.string({ message: "Confirm password is required" }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
@@ -17,6 +23,10 @@ export const SignUpSchema = z
   });
 
 export const LoginSchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
+  email: z.string({ message: "Email is required" }).email({
+    message: "Invalid email",
+  }),
+  password: z.string({ message: "Password is required" }).min(1, {
+    message: "Password is required",
+  }),
 });

@@ -5,12 +5,13 @@ const request = async (url: string, method: string, data: any) => {
   try {
     const token = getAuthToken();
     const request = await axios.request({
+      baseURL: process.env.NEXT_PUBLIC_API_URL,
       url,
       method,
       data,
       headers: {
         "Content-Type": "application/json",
-        ...(token && { Authorization: `Bearer ${token}` }),
+        ...(token && { Authorization: token }),
       },
     });
     return request.data;

@@ -21,6 +21,7 @@ export const authMiddleware = async (
       .json({ success: false, message: "Unauthorized", data: null });
     return;
   }
+  console.log({ decodedToken });
   const user = await UserModel.findById(decodedToken);
   if (!user) {
     res

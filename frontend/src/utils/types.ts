@@ -6,6 +6,8 @@ export type ToastContextType = {
     toastMessage: string,
     toastType: "error" | "success" | "info"
   ) => void;
+  toastTitle: string;
+  setToastTitle: (toastTitle: string) => void;
 };
 
 export type User = {

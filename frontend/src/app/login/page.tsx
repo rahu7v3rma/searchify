@@ -5,6 +5,7 @@ import Input from "@/components/input";
 import { LoaderContext } from "@/context/loader";
 import { ToastContext } from "@/context/toast";
 import { login } from "@/utils/api";
+import { setAuthToken } from "@/utils/localStorage";
 import { useRouter } from "next/navigation";
 import { memo, useCallback, useContext } from "react";
 import { useForm } from "react-hook-form";
@@ -40,6 +41,7 @@ const Login = memo(() => {
         triggerToast(response.message, "error");
         return;
       }
+      setAuthToken(response.data.token);
       triggerToast("Login successful", "success");
       router.push("/profile");
     },

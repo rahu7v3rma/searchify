@@ -8,6 +8,8 @@ export const ToastContext = createContext<ToastContextType>({
   toastMessage: "",
   toastType: "success",
   triggerToast: () => {},
+  toastTitle: "",
+  setToastTitle: () => {},
 });
 
 const ToastProvider = ({ children }: { children: React.ReactNode }) => {
@@ -16,6 +18,7 @@ const ToastProvider = ({ children }: { children: React.ReactNode }) => {
     "success"
   );
   const [toastMessage, setToastMessage] = useState<string>("");
+  const [toastTitle, setToastTitle] = useState<string>("");
 
   const triggerToast = useCallback(
     (toastMessage: string, toastType: "error" | "success" | "info") => {
@@ -36,6 +39,8 @@ const ToastProvider = ({ children }: { children: React.ReactNode }) => {
         toastMessage,
         toastType,
         triggerToast,
+        toastTitle,
+        setToastTitle,
       }}
     >
       {children}

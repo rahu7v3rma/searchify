@@ -13,6 +13,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     apiGetProfile().then((response) => {
+      console.log(response);
       if (response.success) {
         setUser(response.data);
       }

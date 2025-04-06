@@ -12,10 +12,12 @@ UserRouter.post("/signup", async (req, res) => {
   const requestBody = req.body;
   const parsedBody = SignUpSchema.safeParse(requestBody);
   if (!parsedBody.success) {
+    const fieldErrors = parsedBody.error.flatten().fieldErrors;
+    const firstErrorMessage = Object.values(fieldErrors)[0][0];
     res.status(400).json({
       success: false,
-      message: parsedBody.error.flatten().fieldErrors,
-      data: null,
+      message: firstErrorMessage,
+      data: fieldErrors,
     });
     return;
   }
@@ -33,10 +35,12 @@ UserRouter.post("/login", async (req, res) => {
   const requestBody = req.body;
   const parsedBody = LoginSchema.safeParse(requestBody);
   if (!parsedBody.success) {
+    const fieldErrors = parsedBody.error.flatten().fieldErrors;
+    const firstErrorMessage = Object.values(fieldErrors)[0][0];
     res.status(400).json({
       success: false,
-      message: parsedBody.error.flatten().fieldErrors,
-      data: null,
+      message: firstErrorMessage,
+      data: fieldErrors,
     });
     return;
   }

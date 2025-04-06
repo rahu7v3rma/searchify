@@ -20,7 +20,13 @@ const Header = memo(() => {
         {user ? (
           <>
             <Avatar
-              initials={user.email?.charAt(0) || ""}
+              initials={
+                user.name
+                  .split(" ")
+                  .slice(0, 2)
+                  .map((name) => name.charAt(0))
+                  .join("") || ""
+              }
               onClick={() => router.push("/profile")}
             />
           </>
