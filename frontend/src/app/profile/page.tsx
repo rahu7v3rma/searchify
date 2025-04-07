@@ -1,24 +1,10 @@
 "use client";
-import { memo, useCallback, useContext } from "react";
-import { AuthContext } from "@/context/auth";
 import Button from "@/components/buttons/Button";
 import Text from "@/components/text";
-import { useRouter } from "next/navigation";
-import { LoaderContext } from "@/context/loader";
-import { ToastContext } from "@/context/toast";
-import { removeAuthToken } from "@/utils/localStorage";
+import { AuthContext } from "@/context/auth";
+import { memo, useContext } from "react";
 const Profile = memo(() => {
-  const { user } = useContext(AuthContext);
-  const router = useRouter();
-  const { openLoader, closeLoader } = useContext(LoaderContext);
-  const { triggerToast } = useContext(ToastContext);
-  const logout = useCallback(async () => {
-    openLoader();
-    removeAuthToken();
-    triggerToast("Logout successful", "success");
-    router.push("/login");
-    closeLoader();
-  }, []);
+  const { user, logout } = useContext(AuthContext);
   return (
     <div>
       <Text>{user?.email}</Text>

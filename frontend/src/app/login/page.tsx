@@ -2,11 +2,7 @@
 import Button from "@/components/buttons/Button";
 import Heading from "@/components/heading";
 import Input from "@/components/input";
-import { LoaderContext } from "@/context/loader";
-import { ToastContext } from "@/context/toast";
-import { login } from "@/utils/api";
-import { setAuthToken } from "@/utils/localStorage";
-import { useRouter } from "next/navigation";
+import { AuthContext } from "@/context/auth";
 import { memo, useCallback, useContext } from "react";
 import { useForm } from "react-hook-form";
 
@@ -28,22 +24,11 @@ const Login = memo(() => {
     setValue(name, value, { shouldValidate: true });
   }, []);
 
-  const { openLoader, closeLoader } = useContext(LoaderContext);
-  const { triggerToast } = useContext(ToastContext);
-  const router = useRouter();
+  const { login } = useContext(AuthContext);
+
   const onSubmit = useCallback(
     async (formData: { email: string; password: string }) => {
-      const { email, password } = formData;
-      openLoader();
-      const response = await login(email, password);
-      closeLoader();
-      if (!response.success) {
-        triggerToast(response.message, "error");
-        return;
-      }
-      setAuthToken(response.data.token);
-      triggerToast("Login successful", "success");
-      router.push("/profile");
+      login(formData.email, formData.password);
     },
     []
   );

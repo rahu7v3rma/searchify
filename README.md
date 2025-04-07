@@ -2,5 +2,6 @@
 
 ## Tech Stack
 
-- Backend: Node, MongoDB, Django
+- Backend: Node, Django
+- Database: MongoDB, SQL
 - Frontend: React, Tailwind

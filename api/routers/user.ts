@@ -22,6 +22,15 @@ UserRouter.post("/signup", async (req, res) => {
     return;
   }
   const { name, email, password } = parsedBody.data;
+  const findUser = await UserModel.findOne({ email });
+  if (findUser) {
+    res.status(400).json({
+      success: false,
+      message: "User already exists",
+      data: null,
+    });
+    return;
+  }
   const hashedPassword = await hashPassword(password);
   await UserModel.create({ name, email, password: hashedPassword });
   res.status(201).json({

@@ -18,6 +18,14 @@ export type User = {
 
 export type AuthContextType = {
   user: User | null;
+  logout: () => void;
+  signup: (
+    name: string,
+    email: string,
+    password: string,
+    confirmPassword: string
+  ) => void;
+  login: (email: string, password: string) => void;
 };
 
 export type LoaderContextType = {
