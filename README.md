@@ -3,5 +3,6 @@
 ## Tech Stack
 
 - Backend: Node, Django
-- Database: MongoDB, SQL
+- Database: MongoDB, PostgreSQL
 - Frontend: React, Tailwind
+- Hosting: Render.com

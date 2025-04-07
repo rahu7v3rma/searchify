@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Response, Router } from "express";
 import { authMiddleware } from "../middlewares/auth";
 import UserModel from "../models/user";
 import { comparePassword, hashPassword } from "../utils/bcrypt";
@@ -78,17 +78,22 @@ UserRouter.post("/login", async (req, res) => {
     .json({ success: true, message: "Login successful", data: { token } });
 });
 
-UserRouter.get("/profile", authMiddleware, async (req: UserRequest, res) => {
-  const user = {
-    _id: req.user._id,
-    name: req.user.name,
-    email: req.user.email,
-  };
-  res.status(200).json({
-    success: true,
-    message: "Profile fetched successfully",
-    data: user,
-  });
-});
+UserRouter.get(
+  "/profile",
+  authMiddleware,
+  async (req: UserRequest, res: Response) => {
+    const user = {
+      _id: req.user._id,
+      name: req.user.name,
+      email: req.user.email,
+    };
+    res.status(200).json({
+      success: true,
+      message: "Profile fetched successfully",
+      data: user,
+    });
+    return;
+  }
+);
 
 export default UserRouter;

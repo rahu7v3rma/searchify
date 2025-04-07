@@ -1,12 +1,13 @@
 import { Document } from "mongoose";
 import { Request } from "express";
+
 export interface User extends Document {
   _id: string;
   name: string;
   email: string;
-  password?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  password: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface UserRequest extends Request {

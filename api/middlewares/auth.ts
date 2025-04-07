@@ -1,8 +1,9 @@
-import { NextFunction, Response } from "express";
+import { NextFunction, RequestHandler, Response } from "express";
 import UserModel from "../models/user";
 import { verifyToken } from "../utils/jwt";
 import { UserRequest } from "../utils/types";
-export const authMiddleware = async (
+
+export const authMiddleware: RequestHandler = async (
   req: UserRequest,
   res: Response,
   next: NextFunction
