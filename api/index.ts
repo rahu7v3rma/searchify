@@ -15,8 +15,13 @@ app.use(morgan("dev"));
 
 app.use("/user", UserRouter);
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
+app.get("/connect", async (req, res) => {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  res.send({
+    success: true,
+    message: "API connected",
+    data: null,
+  });
 });
 
 app.listen(process.env.PORT, () => {

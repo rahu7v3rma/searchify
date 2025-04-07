@@ -17,9 +17,9 @@ const request = async (url: string, method: string, data: any) => {
     return request.data;
   } catch (error: any) {
     return {
-      success: error.response.data.success ?? false,
-      message: error.response.data.message ?? "Something went wrong",
-      data: error.response.data.data ?? null,
+      success: error?.response?.data?.success ?? false,
+      message: error?.response?.data?.message ?? "Something went wrong",
+      data: error?.response?.data?.data ?? null,
     };
   }
 };
@@ -49,5 +49,10 @@ export const login = async (email: string, password: string) => {
 
 export const getProfile = async () => {
   const response = await request("/user/profile", "GET", {});
+  return response;
+};
+
+export const connectAPI = async () => {
+  const response = await request("/connect", "GET", {});
   return response;
 };

@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "nodemon index.ts",
+    "dev": "nodemon --exec ts-node --transpile-only index.ts",
     "build": "tsc",
     "start": "node build/index.js"
   },
