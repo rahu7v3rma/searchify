@@ -56,3 +56,19 @@ export const connectAPI = async () => {
   const response = await request("/connect", "GET", {});
   return response;
 };
+
+export const getCriteriaIdList = async () => {
+  const response = await request("/gkt/creteria-id-list", "GET", {});
+  return response;
+};
+
+export const generateKeywords = async (
+  keyword: string,
+  countryCriteriaId: string
+) => {
+  const response = await request("/gkt/generate-keywords", "POST", {
+    keyword,
+    countryCriteriaId,
+  });
+  return response;
+};

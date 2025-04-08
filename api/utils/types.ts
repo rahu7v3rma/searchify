@@ -13,3 +13,13 @@ export interface User extends Document {
 export interface UserRequest extends Request {
   user: User;
 }
+
+export interface Geotarget extends Document {
+  criteriaId: string;
+  name: string;
+  canonicalName: string;
+  targetType: string;
+  countryCode: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

@@ -30,6 +30,7 @@ export type AuthContextType = {
 
 export type LoaderContextType = {
   isOpen: boolean;
-  openLoader: () => void;
+  openLoader: (loaderMessage?: string) => void;
   closeLoader: () => void;
+  loaderMessage: string;
 };

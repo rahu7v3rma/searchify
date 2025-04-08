@@ -7,12 +7,15 @@ export const LoaderContext = createContext<LoaderContextType>({
   isOpen: false,
   openLoader: () => {},
   closeLoader: () => {},
+  loaderMessage: "",
 });
 
 const LoaderProvider = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [loaderMessage, setLoaderMessage] = useState<string>("");
 
-  const openLoader = useCallback(() => {
+  const openLoader = useCallback((loaderMessage = "") => {
+    setLoaderMessage(loaderMessage);
     setIsOpen(true);
   }, []);
 
@@ -26,6 +29,7 @@ const LoaderProvider = ({ children }: { children: React.ReactNode }) => {
         isOpen,
         openLoader,
         closeLoader,
+        loaderMessage,
       }}
     >
       {children}

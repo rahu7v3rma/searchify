@@ -30,3 +30,12 @@ export const LoginSchema = z.object({
     message: "Password is required",
   }),
 });
+
+export const GenerateKeywordsRequestSchema = z.object({
+  keyword: z.string({ message: "Keyword is required" }).min(1, {
+    message: "Keyword is required",
+  }),
+  countryCriteriaId: z.string({ message: "Criteria ID is required" }).min(1, {
+    message: "Criteria ID is required",
+  }),
+});

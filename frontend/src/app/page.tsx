@@ -9,7 +9,7 @@ const HomePage = () => {
   const { openLoader, closeLoader } = useContext(LoaderContext);
   const { triggerToast } = useContext(ToastContext);
   useEffect(() => {
-    openLoader();
+    openLoader("Connecting to API");
     connectAPI()
       .then((res) => {
         if (res.success) {
