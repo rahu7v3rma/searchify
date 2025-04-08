@@ -1,8 +1,8 @@
 # Softools - SEO Tools
+- Google Keyword Tool
 
 ## Tech Stack
 
-- Backend: Node, Django
-- Database: MongoDB, PostgreSQL
+- Backend: Node, Express, MongoDB, GoogleAPIs, Selenium
 - Frontend: React, Tailwind
 - Hosting: Render.com
