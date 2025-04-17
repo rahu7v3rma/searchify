@@ -3,6 +3,6 @@
 
 ## Tech Stack
 
-- Backend: Node, Express, MongoDB, GoogleAPIs, Selenium
+- Backend: Node, Express, MongoDB, Selenium
 - Frontend: React, Tailwind
-- Hosting: Render.com
+- Services: GoogleAPIs, 2Captcha
