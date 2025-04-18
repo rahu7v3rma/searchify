@@ -1,6 +1,7 @@
-require("dotenv").config();
-
+const dotenv = require("dotenv");
 const { GoogleAdsApi, services } = require("google-ads-api");
+
+dotenv.config();
 
 const client = new GoogleAdsApi({
   client_id: process.env.GOOGLE_ADS_CLIENT_ID,

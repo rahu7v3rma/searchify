@@ -7,7 +7,9 @@
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
     "google-ads-api": "^19.0.2-rest-beta",
-    "mongoose": "^8.13.2"
+    "mongoose": "^8.13.2",
+    "morgan": "^1.10.0",
+    "zod": "^3.24.3"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
