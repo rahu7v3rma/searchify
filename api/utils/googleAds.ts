@@ -1,5 +1,6 @@
-const dotenv = require("dotenv");
-const { GoogleAdsApi, services } = require("google-ads-api");
+// @ts-nocheck
+import dotenv from "dotenv";
+import { GoogleAdsApi, services } from "google-ads-api";
 
 dotenv.config();
 
@@ -15,8 +16,8 @@ const customer = client.Customer({
   refresh_token: process.env.GOOGLE_ADS_REFRESH_TOKEN,
 });
 
-module.exports.getKeywordIdeas = async (
-  keyword,
+export const getKeywordIdeas = async (
+  keyword: string,
   criteriaId = "1023191",
   pageSize = 10
 ) => {

@@ -1,8 +1,10 @@
-# Softools - SEO Tools
+# searchify - SEO Tools
 - Google Keyword Tool
 
 ## Tech Stack
 
-- Backend: Node, Express, MongoDB, Selenium
-- Frontend: React, Tailwind
-- Services: GoogleAPIs, 2Captcha
+- API: Node
+- Database: MongoDB
+- Frontend: React
+- Services: Google, 2Captcha
+- Scraping: Selenium

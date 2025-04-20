@@ -1,4 +1,4 @@
-const { model, Schema } = require('mongoose');
+import { Schema, model } from "mongoose";
 
 const GeotargetSchema = new Schema({
   criteriaId: String,

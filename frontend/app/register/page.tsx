@@ -6,6 +6,7 @@ import { z } from "zod";
 import { isStrongPassword } from "validator";
 import { useApi } from "../../utils/api";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const formSchema = z
   .object({
@@ -33,16 +34,25 @@ export default function RegisterPage() {
     resolver: zodResolver(formSchema),
   });
 
-  const registerApi = useApi("/user/register", "POST");
+  const registerApi = useApi({
+    url: "/user/register",
+    method: "POST",
+  });
 
-  const onSubmit = (data) => {
-    registerApi(data);
+  const router = useRouter();
+
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    registerApi(data).then((response) => {
+      if (response.success) {
+        router.push("/verify-email");
+      }
+    });
   };
 
   return (
-    <div className="flex flex-col items-center mt-10">
+    <div className="flex flex-col items-center">
       <div className="flex flex-col gap-4 items-center">
-        <h1 className="text-2xl font-bold">Register</h1>
+        <h1 className="heading-1">Register</h1>
         <div className="flex flex-row gap-2">
           <Input
             label="Name"
@@ -79,7 +89,7 @@ export default function RegisterPage() {
             errorMessage={errors.confirmPassword?.message}
           />
         </div>
-        <Button onPress={handleSubmit(onSubmit)}>Submit</Button>
+        <Button onClick={handleSubmit(onSubmit)}>Submit</Button>
         <p className="text-sm text-gray-500">
           Already have an account?{" "}
           <Link href="/login">

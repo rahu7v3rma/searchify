@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "concurrently": "^9.1.2"
-  },
-  "scripts": {
-    "start": "concurrently \"cd frontend && npm start\" \"cd api && npm start\""
-  }
-}
