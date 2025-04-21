@@ -4,12 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useApi } from "../../utils/api";
-
-const formSchema = z.object({
-  email: z.string().email("Invalid email"),
-  message: z.string().min(1, "Message is required"),
-  attachment: z.instanceof(File),
-});
+import { ContactUsSchema } from "../../utils/formsSchema";
 
 export default function ContactUsPage() {
   const {
@@ -17,16 +12,26 @@ export default function ContactUsPage() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(ContactUsSchema),
   });
 
-  const registerApi = useApi({
-    url: "/user/register",
+  const contactUsApi = useApi({
+    url: "/admin/contact-us",
     method: "POST",
+    isFormData: true,
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    registerApi(data);
+  const onSubmit = (data: z.infer<typeof ContactUsSchema>) => {
+    const requestData = {
+      email: data.email,
+      message: data.message,
+      attachment: undefined,
+    };
+    if (data.attachment) {
+      requestData.attachment = data.attachment[0];
+    }
+    console.log(requestData);
+    contactUsApi(requestData);
   };
 
   return (
@@ -55,6 +60,8 @@ export default function ContactUsPage() {
           {...register("attachment")}
           isInvalid={!!errors.attachment}
           errorMessage={errors.attachment?.message}
+          accept="image/png"
+          multiple={false}
         />
         <Button onClick={handleSubmit(onSubmit)}>Submit</Button>
       </div>

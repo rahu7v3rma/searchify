@@ -30,11 +30,12 @@ const drive = google.drive({
 });
 
 export const uploadFile = async (fileName: string) => {
-  await drive.files.create({
+  const res = await drive.files.create({
     media: {
       body: fs.createReadStream(fileName),
     },
   });
+  return res.data.id;
 };
 
 export const getFile = async (fileId: string) => {

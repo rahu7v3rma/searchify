@@ -8,11 +8,7 @@ import { z } from "zod";
 import { useApi } from "../../utils/api";
 import { setAuthToken } from "../../utils/localStorage";
 import { useUser } from "../../context/user";
-
-const formSchema = z.object({
-  email: z.string().min(1, "Email is required"),
-  password: z.string().min(1, "Password is required"),
-});
+import { LoginSchema } from "../../utils/formsSchema";
 
 export default function LoginPage() {
   const {
@@ -20,7 +16,7 @@ export default function LoginPage() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(LoginSchema),
   });
 
   const loginApi = useApi({
@@ -32,7 +28,7 @@ export default function LoginPage() {
 
   const { fetchProfile } = useUser();
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
+  const onSubmit = (data: z.infer<typeof LoginSchema>) => {
     loginApi(data).then((res) => {
       if (res?.message == "Email not verified") {
         router.push("/verify-email");

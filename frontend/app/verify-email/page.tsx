@@ -5,19 +5,14 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useApi } from "../../utils/api";
 import { useRouter } from "next/navigation";
-
-const formSchema = z.object({
-  email: z.string().email("Invalid email"),
-  emailVerificationCode: z.string(),
-});
-
+import { VerifyEmailSchema } from "../../utils/formsSchema";
 export default function RegisterPage() {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(VerifyEmailSchema),
   });
 
   const verifyEmailApi = useApi({
@@ -27,7 +22,7 @@ export default function RegisterPage() {
 
   const router = useRouter();
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
+  const onSubmit = (data: z.infer<typeof VerifyEmailSchema>) => {
     verifyEmailApi(data).then(() => {
       router.push("/login");
     });

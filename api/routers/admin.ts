@@ -1,25 +1,41 @@
-import express from "express";
-import multer from "multer";
-import z from "zod";
-import { validateRequestBody } from "../middlewares/request";
+import express, { Request, Response } from "express";
+import { uploadSingleFile } from "../middlewares/file";
+import { AdminContactUsSchema } from "../validators/admin";
+import { z } from "zod";
+import { unlinkSync } from "fs";
+import { uploadFile } from "../utils/googleDrive";
+import Contact from "../models/contact";
 
 const AdminRouter = express.Router();
 
-const schema = z.object({
-  email: z.string().email(),
-  message: z.string().min(1),
-});
-
-AdminRouter.get(
+AdminRouter.post(
   "/contact-us",
-  multer({
-    storage: multer.memoryStorage(),
-    limits: { fileSize: 1024 * 1024 * 10 },
-  }).single("attachment"),
-  validateRequestBody(schema),
-  (req, res) => {
+  uploadSingleFile({
+    fileName: "attachment",
+    allowedTypes: ["image/png"],
+    fieldSchema: AdminContactUsSchema,
+  }),
+  async (req: Request, res: Response) => {
+    const attachmentFilePath = req.file.filepath;
+    const { email, message } = req.fields as z.infer<
+      typeof AdminContactUsSchema
+    >;
+
+    const attachmentGoogleDriveFileId = await uploadFile(attachmentFilePath);
+
+    const contact = new Contact({
+      email,
+      attachmentGoogleDriveFileId,
+      message,
+    });
+    await contact.save();
+
+    unlinkSync(attachmentFilePath);
+
     res.json({
-      message: "Hello World",
+      success: true,
+      message: "Contact us details received",
+      data: null,
     });
   }
 );

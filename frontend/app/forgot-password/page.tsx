@@ -1,22 +1,18 @@
 "use client";
 import { Button, Input } from "@heroui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useApi } from "../../utils/api";
-import { useRouter } from "next/navigation";
-
-const formSchema = z.object({
-  email: z.string().email("Invalid email"),
-});
-
+import { ForgotPasswordSchema } from "../../utils/formsSchema";
 export default function ForgotPasswordPage() {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(ForgotPasswordSchema),
   });
 
   const forgotPasswordApi = useApi({
@@ -26,7 +22,7 @@ export default function ForgotPasswordPage() {
 
   const router = useRouter();
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
+  const onSubmit = (data: z.infer<typeof ForgotPasswordSchema>) => {
     forgotPasswordApi(data).then(() => {
       router.push("/reset-password");
     });

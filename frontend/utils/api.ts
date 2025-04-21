@@ -45,7 +45,7 @@ export const useApi = ({
         });
       }
       return response.data;
-    } catch {
+    } catch (error) {
       if (showToast) {
         addToast({
           title: "Something went wrong",
