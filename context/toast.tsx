@@ -4,7 +4,6 @@ import { createContext, ReactNode, useState, useEffect } from "react";
 type Toast = {
   id: number;
   message: string;
-  show: boolean;
 };
 
 export const ToastContext = createContext<{
@@ -20,7 +19,7 @@ export default function ToastProvider({ children }: { children: ReactNode }) {
 
   const showToast = (message: string) => {
     const id = Date.now();
-    const newToast = { id, message, show: true };
+    const newToast = { id, message };
 
     setToasts((prev) => [...prev, newToast]);
 
