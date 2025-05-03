@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-background: var(--color-zinc-800);
+  --color-primary-text: var(--color-gray-300);
+  --color-primary-border: var(--color-gray-600);
+  --color-primary-button-background: var(--color-zinc-600);
+  --color-primary-toast-background: var(--color-zinc-700);
+}
+
+* {
+  color: var(--color-primary-text);
+}
+
+body {
+  background-color: var(--color-primary-background);
+}
