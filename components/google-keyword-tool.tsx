@@ -35,7 +35,7 @@ export default function GoogleKeywordTool() {
         <div className="w-[300px]">
           <Autocomplete
             loading={getGeotargetsLoading}
-            label="Select a geotarget"
+            label="Select a location"
             options={geotargets?.map((geotarget) => ({
               id: geotarget._id,
               name: geotarget.canonicalName,
