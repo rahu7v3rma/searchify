@@ -6,6 +6,8 @@
   --color-primary-border: var(--color-gray-600);
   --color-primary-button-background: var(--color-zinc-600);
   --color-primary-toast-background: var(--color-zinc-700);
+  --color-primary-dropdown-background: var(--color-zinc-600);
+  --color-primary-dropdown-hover-background: var(--color-zinc-700);
 }
 
 * {
