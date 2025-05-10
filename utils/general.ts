@@ -17,3 +17,25 @@ export const debounceAsync = <
 
   return returnFunction as T;
 };
+
+export const validatePassword = (password: string) => {
+  if (
+    password.length < 8 ||
+    !/[0-9]/.test(password) ||
+    !/[^A-Za-z0-9]/.test(password) ||
+    !/[A-Z]/.test(password) ||
+    !/[a-z]/.test(password)
+  ) {
+    return false;
+  }
+
+  return true;
+};
+
+export const validateEmail = (email: string) => {
+  if (!/^.+@.+\..+$/.test(email)) {
+    return false;
+  }
+
+  return true;
+};

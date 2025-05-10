@@ -1,29 +1,12 @@
 "use client";
+import { useState } from "react";
 import { TextButton } from "./button";
 import { Heading1 } from "./heading";
 import { Autocomplete, Input } from "./input";
-import { Geotarget } from "../utils/mongoose";
-import { useState } from "react";
-import useApi from "../hooks/api";
-import { debounceAsync } from "../utils/general";
 
 export default function GoogleKeywordTool() {
-  const [geotargets, setGeotargets] = useState<Geotarget[]>([]);
-  const [selectedGeotarget, setSelectedGeotarget] = useState<Geotarget | null>(
-    null
-  );
-
-  const { loading: getGeotargetsLoading, request: getGeotargets } = useApi<
-    Geotarget[]
-  >({
-    url: "/google-keyword-tool/geotarget",
-    method: "POST",
-  });
-
-  const debouncedGetGeotargets = debounceAsync<typeof getGeotargets>(
-    getGeotargets,
-    1000
-  );
+  const [geotargets, setGeotargets] = useState<any[]>([]);
+  const [selectedGeotarget, setSelectedGeotarget] = useState<any | null>(null);
 
   return (
     <div className="flex flex-col items-center justify-center pt-16">
@@ -34,7 +17,6 @@ export default function GoogleKeywordTool() {
         </div>
         <div className="w-[300px]">
           <Autocomplete
-            loading={getGeotargetsLoading}
             label="Select a location"
             options={geotargets?.map((geotarget) => ({
               id: geotarget._id,
@@ -44,24 +26,8 @@ export default function GoogleKeywordTool() {
               id: selectedGeotarget?._id || "",
               name: selectedGeotarget?.canonicalName || "",
             }}
-            onInputChange={(value) => {
-              debouncedGetGeotargets({ canonicalName: value }).then(
-                (response) => {
-                  if (response.success && response.data) {
-                    console.log("response", response);
-                    setGeotargets(response.data);
-                  }
-                }
-              );
-            }}
-            onChange={(value) => {
-              const foundGeotarget = geotargets.find(
-                (geotarget) => geotarget.canonicalName === value.name
-              );
-              if (foundGeotarget) {
-                setSelectedGeotarget(foundGeotarget);
-              }
-            }}
+            onInputChange={(value) => {}}
+            onChange={(value) => {}}
           />
         </div>
         <TextButton text="Search" />

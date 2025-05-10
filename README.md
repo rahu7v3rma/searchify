@@ -3,8 +3,7 @@
 
 ## Tech Stack
 
-- API: Node
-- Database: MongoDB
-- Frontend: React
+- Backend: Supabase
+- Framework: NextJS
 - Services: Google, 2Captcha
 - Scraping: Selenium

@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import Text from "./text";
 import Spinner from "./spinner";
+import EyeOnIcon from "../assets/icons/eye-on";
+import EyeOffIcon from "../assets/icons/eye-off";
 
 export function Input({
   label,
@@ -15,17 +17,28 @@ export function Input({
   value?: string;
   onChange?: (text: string) => void;
 }) {
+  const [showPassword, setShowPassword] = useState(false);
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 items-start w-full">
       <Text text={label} />
-      <input
-        type={type}
-        placeholder={placeholder}
-        id={label}
-        value={value}
-        onChange={(e) => onChange?.(e.target.value)}
-        className="border-2 border-primary-border rounded-md p-2 text-sm"
-      />
+      <div className="relative w-full">
+        <input
+          type={type === "password" ? (showPassword ? "text" : "password") : type}
+          placeholder={placeholder}
+          id={label}
+          value={value}
+          onChange={(e) => onChange?.(e.target.value)}
+          className="border-2 border-primary-border rounded-md p-2 text-sm w-full"
+        />
+        {type === "password" && (
+          <button
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-2 z-10 w-4 h-4 top-1/2 -translate-y-1/2"
+          >
+            {showPassword ? <EyeOnIcon /> : <EyeOffIcon />}
+          </button>
+        )}
+      </div>
     </div>
   );
 }

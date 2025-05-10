@@ -1,5 +1,10 @@
 import GoogleKeywordTool from "../../components/google-keyword-tool";
+import Container from "../../components/container";
 
 export default async function GoogleKeywordToolPage() {
-  return <GoogleKeywordTool />;
+  return (
+    <Container>
+      <GoogleKeywordTool />
+    </Container>
+  );
 }

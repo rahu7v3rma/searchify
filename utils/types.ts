@@ -1,4 +1,4 @@
-declare module "create-uule" {
-  const createUULE: (location: string) => string;
-  export default createUULE;
-}
+export type User = {
+  id: string;
+  email: string;
+};

@@ -2,7 +2,9 @@
 
 @theme {
   --color-primary-background: var(--color-zinc-800);
+  --color-secondary-background: var(--color-zinc-400);
   --color-primary-text: var(--color-gray-300);
+  --color-secondary-text: var(--color-gray-900);
   --color-primary-border: var(--color-gray-600);
   --color-primary-button-background: var(--color-zinc-600);
   --color-primary-toast-background: var(--color-zinc-700);
