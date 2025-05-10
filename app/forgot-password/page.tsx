@@ -27,20 +27,21 @@ export default function ForgotPassword() {
 
     setLoading(true);
 
-    try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}${paths.changePassword}`,
-      });
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}${paths.changePassword}`,
+    });
 
-      if (error) throw error;
-
-      showToast("Password reset email sent");
-      router.push(paths.login);
-    } catch (error) {
+    if (error) {
       showToast(error?.message || "Failed to send reset email");
-    } finally {
       setLoading(false);
+      return;
     }
+
+    showToast("Password reset email sent");
+
+    router.push(paths.login);
+
+    setLoading(false);
   };
 
   return (
@@ -63,4 +64,4 @@ export default function ForgotPassword() {
       </div>
     </div>
   );
-} 
+}

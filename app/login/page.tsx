@@ -36,31 +36,32 @@ export default function Login() {
 
     setLoading(true);
 
-    try {
-      const { error, data } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+    const { error, data } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-      if (error) throw error;
-
-      showToast("Login successful");
-
-      const user = {
-        email,
-        id: data.user?.id,
-      };
-
-      setUser(user);
-
-      setCookie(process.env.NEXT_PUBLIC_USER_COOKIE_KEY!, JSON.stringify(user));
-
-      router.push(paths.dashboard);
-    } catch (error) {
+    if (error) {
       showToast(error?.message || "Login failed");
-    } finally {
       setLoading(false);
+      return;
     }
+
+    showToast("Login successful");
+
+    setUser({
+      email,
+      id: data.user?.id,
+    });
+
+    setCookie(
+      process.env.NEXT_PUBLIC_USER_ACCESS_TOKEN_KEY!,
+      data.session.access_token
+    );
+
+    router.push(paths.dashboard);
+
+    setLoading(false);
   };
 
   return (

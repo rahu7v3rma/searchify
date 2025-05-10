@@ -15,6 +15,8 @@ export const userPaths = [
   "/privacy",
   "/change-password",
   "/google-keyword-tool",
+  "/api/user/delete-user",
+  "/api/google-keyword-tool",
 ];
 
 export const publicBasePath = "/";
@@ -31,4 +33,6 @@ export const paths = {
   changePassword: "/change-password",
   home: "/",
   googleKeywordTool: "/google-keyword-tool",
+  deleteUser: "/api/user/delete-user",
+  googleKeywordToolApi: "/api/google-keyword-tool",
 };

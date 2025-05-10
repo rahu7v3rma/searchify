@@ -35,20 +35,21 @@ export default function ChangePassword() {
 
     setLoading(true);
 
-    try {
-      const { error } = await supabase.auth.updateUser({
-        password,
-      });
+    const { error } = await supabase.auth.updateUser({
+      password,
+    });
 
-      if (error) throw error;
-
-      showToast("Password updated successfully");
-      router.push(paths.dashboard);
-    } catch (error) {
+    if (error) {
       showToast(error?.message || "Failed to update password");
-    } finally {
       setLoading(false);
+      return;
     }
+
+    showToast("Password updated successfully");
+
+    router.push(paths.dashboard);
+
+    setLoading(false);
   };
 
   return (

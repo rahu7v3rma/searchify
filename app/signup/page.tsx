@@ -44,31 +44,32 @@ export default function Signup() {
 
     setLoading(true);
 
-    try {
-      const { error, data } = await supabase.auth.signUp({
-        email,
-        password,
-      });
+    const { error, data } = await supabase.auth.signUp({
+      email,
+      password,
+    });
 
-      if (error) throw error;
-
-      showToast("Signup successful");
-
-      const user = {
-        email,
-        id: data.user?.id,
-      };
-
-      setUser(user);
-
-      setCookie(process.env.NEXT_PUBLIC_USER_COOKIE_KEY!, JSON.stringify(user));
-
-      router.push(paths.dashboard);
-    } catch (error) {
+    if (error) {
       showToast(error?.message || "Signup failed");
-    } finally {
       setLoading(false);
+      return;
     }
+
+    showToast("Signup successful");
+
+    setUser({
+      email,
+      id: data.user?.id,
+    });
+
+    setCookie(
+      process.env.NEXT_PUBLIC_USER_ACCESS_TOKEN_KEY!,
+      data.session.access_token
+    );
+
+    router.push(paths.dashboard);
+
+    setLoading(false);
   };
 
   return (

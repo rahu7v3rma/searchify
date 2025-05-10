@@ -1,23 +1,17 @@
 "use client";
 import { createContext, useEffect, useState } from "react";
-import { User } from "../utils/types";
-import supabase from "../lib/supabase";
 import useLoader from "../hooks/loader";
 import useToast from "../hooks/toast";
-import { getCookie, setCookie, removeCookie } from "../utils/cookie";
-import { useRouter } from "next/navigation";
-import { paths } from "../constants/paths";
+import supabase from "../lib/supabase";
+import { setCookie } from "../utils/cookie";
+import { User } from "../utils/types";
 
 export const UserContext = createContext<{
   user: User | null;
   setUser: (user: User | null) => void;
-  logout: () => void;
-  refreshUser: () => Promise<void>;
 }>({
   user: null,
   setUser: (user: User | null) => {},
-  logout: () => {},
-  refreshUser: async () => {},
 });
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
@@ -25,85 +19,52 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const { setLoading } = useLoader();
   const { showToast } = useToast();
-  const router = useRouter();
 
-  const refreshUser = async () => {
+  const getSession = async () => {
     setLoading(true);
-    try {
-      const { data, error } = await supabase.auth.getUser();
-      if (error) throw error;
 
-      if (data.user) {
-        const userData = {
-          id: data.user.id,
-          email: data.user.email,
-        };
-        setUser(userData);
-        setCookie(
-          process.env.NEXT_PUBLIC_USER_COOKIE_KEY!,
-          JSON.stringify(userData)
-        );
-      }
-    } catch (error) {
-      showToast(error?.message || "Failed to refresh user");
-    } finally {
+    const { data, error } = await supabase.auth.getSession();
+    if (error) {
+      showToast(error?.message || "Failed to get session");
       setLoading(false);
+      return;
     }
-  };
 
-  const logout = async () => {
-    setLoading(true);
-    try {
-      await supabase.auth.signOut();
-      setUser(null);
-      removeCookie(process.env.NEXT_PUBLIC_USER_COOKIE_KEY!);
-      showToast("Logged out successfully");
-      router.push(paths.login);
-    } catch (error) {
-      showToast(error?.message || "Failed to logout");
-    } finally {
-      setLoading(false);
-    }
+    setCookie(
+      process.env.NEXT_PUBLIC_USER_ACCESS_TOKEN_KEY!,
+      data.session?.access_token
+    );
+
+    setLoading(false);
   };
 
   const getUser = async () => {
     setLoading(true);
-    try {
-      const cookieUser = getCookie(process.env.NEXT_PUBLIC_USER_COOKIE_KEY!);
-      if (cookieUser) {
-        const parsedUser = JSON.parse(cookieUser);
-        setUser(parsedUser);
-        return;
-      }
 
-      const { data, error } = await supabase.auth.getUser();
-      if (error) throw error;
-
-      if (data.user) {
-        const userData = {
-          id: data.user.id,
-          email: data.user.email,
-        };
-        setUser(userData);
-        setCookie(
-          process.env.NEXT_PUBLIC_USER_COOKIE_KEY!,
-          JSON.stringify(userData)
-        );
-        showToast("User fetched successfully");
-      }
-    } catch (error) {
+    const { data, error } = await supabase.auth.getUser();
+    if (error) {
       showToast(error?.message || "Failed to get user");
-    } finally {
       setLoading(false);
+      return;
     }
+
+    setUser({
+      id: data.user.id,
+      email: data.user.email,
+    });
+
+    showToast("User fetched successfully");
+
+    setLoading(false);
   };
 
   useEffect(() => {
     getUser();
+    getSession();
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser, logout, refreshUser }}>
+    <UserContext.Provider value={{ user, setUser }}>
       {children}
     </UserContext.Provider>
   );

@@ -8,7 +8,7 @@ import {
 
 export function middleware(request: NextRequest) {
   const cookieUser = request.cookies.get(
-    process.env.NEXT_PUBLIC_USER_COOKIE_KEY!
+    process.env.NEXT_PUBLIC_USER_ACCESS_TOKEN_KEY!
   );
 
   if (cookieUser) {

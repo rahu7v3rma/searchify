@@ -1,12 +1,31 @@
 "use client";
 import { useState } from "react";
+import useLoader from "../hooks/loader";
+import useToast from "../hooks/toast";
+import { getKeywordToolSearch } from "../lib/api";
 import { TextButton } from "./button";
-import { Heading1 } from "./heading";
 import { Autocomplete, Input } from "./input";
 
 export default function GoogleKeywordTool() {
   const [geotargets, setGeotargets] = useState<any[]>([]);
   const [selectedGeotarget, setSelectedGeotarget] = useState<any | null>(null);
+
+  const { showToast } = useToast();
+  const { setLoading } = useLoader();
+
+  const search = async () => {
+    setLoading(true);
+
+    const { data, error } = await getKeywordToolSearch("hotels", "1023191");
+
+    if (error) {
+      showToast(error);
+    } else {
+      console.log(data);
+    }
+
+    setLoading(false);
+  };
 
   return (
     <div className="flex flex-col items-center justify-center pt-16">
@@ -29,7 +48,7 @@ export default function GoogleKeywordTool() {
             onChange={(value) => {}}
           />
         </div>
-        <TextButton text="Search" />
+        <TextButton text="Search" onClick={search} />
       </div>
     </div>
   );
