@@ -8,56 +8,36 @@ import Text from "../../components/text";
 import Link from "../../components/link";
 import useLoader from "../../hooks/loader";
 import useToast from "../../hooks/toast";
-import useUser from "../../hooks/user";
 import supabase from "../../lib/supabase";
 import { validateEmail } from "../../utils/general";
-import { setCookie } from "../../utils/cookie";
 import { paths } from "../../constants/paths";
 
-export default function Login() {
+export default function ForgotPassword() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   const { showToast } = useToast();
   const router = useRouter();
-  const { setUser } = useUser();
   const { setLoading } = useLoader();
 
-  const login = async () => {
+  const resetPassword = async () => {
     if (!validateEmail(email)) {
       showToast("Invalid email");
-      return;
-    }
-
-    if (!password) {
-      showToast("Password is required");
       return;
     }
 
     setLoading(true);
 
     try {
-      const { error, data } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}${paths.changePassword}`,
       });
 
       if (error) throw error;
 
-      showToast("Login successful");
-
-      const user = {
-        email,
-        id: data.user?.id,
-      };
-
-      setUser(user);
-
-      setCookie(process.env.NEXT_PUBLIC_USER_COOKIE_KEY!, JSON.stringify(user));
-
-      router.push(paths.dashboard);
+      showToast("Password reset email sent");
+      router.push(paths.login);
     } catch (error) {
-      showToast(error?.message || "Login failed");
+      showToast(error?.message || "Failed to send reset email");
     } finally {
       setLoading(false);
     }
@@ -66,7 +46,7 @@ export default function Login() {
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="text-center flex gap-4 flex-col">
-        <Heading1 text="Login" />
+        <Heading1 text="Forgot Password" />
         <div className="w-[300px]">
           <Input
             label="Email"
@@ -75,27 +55,12 @@ export default function Login() {
             onChange={(text) => setEmail(text)}
           />
         </div>
-        <div className="w-[300px]">
-          <Input
-            label="Password"
-            type="password"
-            value={password}
-            onChange={(text) => setPassword(text)}
-          />
-          <div className="flex justify-end mt-1">
-            <Link
-              href={paths.forgotPassword}
-              text="Forgot Password?"
-              size="small"
-            />
-          </div>
-        </div>
-        <TextButton text="Login" onClick={login} />
+        <TextButton text="Reset Password" onClick={resetPassword} />
       </div>
       <div className="flex gap-2 mt-4">
-        <Text text="Don't have an account?" />
-        <Link href={paths.signup} text="Signup" />
+        <Text text="Remember your password?" />
+        <Link href={paths.login} text="Login" />
       </div>
     </div>
   );
-}
+} 

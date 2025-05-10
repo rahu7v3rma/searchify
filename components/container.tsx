@@ -1,3 +1,18 @@
-export default function Container({ children }: { children: React.ReactNode }) {
-  return <div className="p-16">{children}</div>;
+import { Heading1 } from "./heading";
+
+export default function MainbarContainer({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <div className="border-b border-primary-border pb-4">
+        <Heading1 text={title} />
+      </div>
+      <div className="mt-4">{children}</div>
+    </div>
+  );
 }

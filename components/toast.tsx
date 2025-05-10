@@ -12,7 +12,7 @@ export default function Toast() {
       {toasts.map((toast) => (
         <div
           key={toast.id}
-          className="bg-primary-toast-background text-white px-4 py-2 rounded-lg shadow-lg max-w-sm"
+          className="bg-primary-toast-background text-white px-4 py-2 rounded-lg shadow-lg max-w-sm transition-all"
         >
           {toast.message}
         </div>

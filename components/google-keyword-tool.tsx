@@ -10,7 +10,6 @@ export default function GoogleKeywordTool() {
 
   return (
     <div className="flex flex-col items-center justify-center pt-16">
-      <Heading1 text="Google Keyword Tool" />
       <div className="flex flex-row gap-4 items-end mt-6">
         <div className="w-[300px]">
           <Input label="Enter a keyword" />

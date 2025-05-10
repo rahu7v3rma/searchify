@@ -2,14 +2,17 @@
 
 @theme {
   --color-primary-background: var(--color-zinc-800);
-  --color-secondary-background: var(--color-zinc-400);
+  --color-secondary-background: var(--color-zinc-700);
   --color-primary-text: var(--color-gray-300);
-  --color-secondary-text: var(--color-gray-900);
   --color-primary-border: var(--color-gray-600);
   --color-primary-button-background: var(--color-zinc-600);
   --color-primary-toast-background: var(--color-zinc-700);
   --color-primary-dropdown-background: var(--color-zinc-600);
   --color-primary-dropdown-hover-background: var(--color-zinc-700);
+  --color-avatar-background: var(--color-zinc-400);
+  --color-avatar-text: var(--color-gray-900);
+  --color-sidebar-background: var(--color-zinc-700);
+  --color-mainbar-background: var(--color-zinc-700);
 }
 
 * {

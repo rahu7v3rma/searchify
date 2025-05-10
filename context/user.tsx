@@ -6,6 +6,8 @@ import useLoader from "../hooks/loader";
 import useToast from "../hooks/toast";
 import { getCookie, setCookie, removeCookie } from "../utils/cookie";
 import { useRouter } from "next/navigation";
+import { paths } from "../constants/paths";
+
 export const UserContext = createContext<{
   user: User | null;
   setUser: (user: User | null) => void;
@@ -56,7 +58,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       setUser(null);
       removeCookie(process.env.NEXT_PUBLIC_USER_COOKIE_KEY!);
       showToast("Logged out successfully");
-      router.push("/login");
+      router.push(paths.login);
     } catch (error) {
       showToast(error?.message || "Failed to logout");
     } finally {
