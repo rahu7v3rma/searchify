@@ -2,9 +2,7 @@ node_modules
 .swc
 .next
 .env
-tasks.md
 .DS_Store
 package-lock.json
-local
-.envrc
-chromedriver
+.vscode
+__pycache__
