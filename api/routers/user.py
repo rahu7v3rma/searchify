@@ -20,8 +20,8 @@ user_bp = Blueprint("user", __name__)
 @user_bp.route("/register", methods=["POST"])
 def register():
     try:
-        request_email = str(request.json.get("email"))
-        request_password = str(request.json.get("password"))
+        request_email = request.json.get("email")
+        request_password = request.json.get("password")
 
         is_email_valid, email_error = validate_email(request_email)
         if not is_email_valid:
@@ -38,6 +38,9 @@ def register():
                 "message": password_error,
                 "data": None,
             }, 400
+        
+        request_email = str(request_email)
+        request_password = str(request_password)
 
         db_user = find_user_by_email(request_email)
         if db_user:
@@ -66,8 +69,8 @@ def register():
 @user_bp.route("/login", methods=["POST"])
 def login():
     try:
-        request_email = str(request.json.get("email"))
-        request_password = str(request.json.get("password"))
+        request_email = request.json.get("email")
+        request_password = request.json.get("password")
 
         if not request_email or not request_password:
             return {
@@ -75,6 +78,9 @@ def login():
                 "message": "Email and password are required",
                 "data": None,
             }, 400
+        
+        request_email = str(request_email)
+        request_password = str(request_password)
 
         db_user = find_user_by_email(request_email)
         if not db_user:
@@ -110,9 +116,11 @@ def login():
 @user_bp.route("/forgot-password", methods=["POST"])
 def forgot_password():
     try:
-        request_email = str(request.json.get("email"))
+        request_email = request.json.get("email")
         if not request_email:
             return {"success": False, "message": "Email is required", "data": None}, 400
+        
+        request_email = str(request_email)
 
         db_user = find_user_by_email(request_email)
         if not db_user:
@@ -144,11 +152,9 @@ def forgot_password():
 @user_bp.route("/change-password", methods=["POST"])
 def change_password():
     try:
-        request_email = str(request.json.get("email"))
-        request_password = str(request.json.get("password"))
-        request_email_verification_code = str(
-            request.json.get("email_verification_code")
-        )
+        request_email = request.json.get("email")
+        request_password = request.json.get("password")
+        request_email_verification_code = request.json.get("email_verification_code")
 
         if (
             not request_email
@@ -160,6 +166,10 @@ def change_password():
                 "message": "Email, password, and email verification code are required",
                 "data": None,
             }, 400
+
+        request_email = str(request_email)
+        request_password = str(request_password)
+        request_email_verification_code = str(request_email_verification_code)
 
         is_valid_password, password_error = validate_password(request_password)
         if not is_valid_password:

@@ -26,4 +26,4 @@ flask --app main run
 ```
 
 ## Environment variables
-- required env variables are mentioned in the `.env.exmaple` file
+- required env variables are mentioned in the `.env.example` file
